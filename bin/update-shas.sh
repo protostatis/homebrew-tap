@@ -44,8 +44,9 @@ sha256_of() {
 
 declare -A TARGETS=(
   [aarch64-apple-darwin]=REPLACE_ME_AARCH64_APPLE_DARWIN
-  [x86_64-apple-darwin]=REPLACE_ME_X86_64_APPLE_DARWIN
   [x86_64-unknown-linux-gnu]=REPLACE_ME_X86_64_UNKNOWN_LINUX_GNU
+  # x86_64-apple-darwin disabled (macos-13 runner pool deprecated). Re-add
+  # this entry along with the formula block when we set up cross-compile.
 )
 
 TMPDIR="$(mktemp -d)"

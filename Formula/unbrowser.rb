@@ -14,10 +14,10 @@ class Unbrowser < Formula
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-aarch64-apple-darwin.tar.gz"
       sha256 "REPLACE_ME_AARCH64_APPLE_DARWIN"
     end
-    on_intel do
-      url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-x86_64-apple-darwin.tar.gz"
-      sha256 "REPLACE_ME_X86_64_APPLE_DARWIN"
-    end
+    # macOS Intel intentionally not packaged here: GitHub's macos-13 runner
+    # pool is being deprecated and CI allocations were exceeding an hour.
+    # Intel Mac users should `cargo install unbrowser`. This block can come
+    # back once we add a cross-compile path from arm64 → x86_64.
   end
 
   on_linux do
