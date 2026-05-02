@@ -44,9 +44,8 @@ sha256_of() {
 
 declare -A TARGETS=(
   [aarch64-apple-darwin]=REPLACE_ME_AARCH64_APPLE_DARWIN
+  [x86_64-apple-darwin]=REPLACE_ME_X86_64_APPLE_DARWIN
   [x86_64-unknown-linux-gnu]=REPLACE_ME_X86_64_UNKNOWN_LINUX_GNU
-  # x86_64-apple-darwin disabled (macos-13 runner pool deprecated). Re-add
-  # this entry along with the formula block when we set up cross-compile.
 )
 
 TMPDIR="$(mktemp -d)"
@@ -72,19 +71,42 @@ for target in "${!TARGETS[@]}"; do
   echo "  $target  ${SHAS[$target]}"
 done
 
-# In-place edit. -i '' is BSD sed (macOS); -i'' is GNU sed (Linux). Use -i.bak
-# then delete the .bak — works on both.
+# In-place edit using Python so we can match per-target sha lines reliably
+# regardless of whether the formula currently has a REPLACE_ME_* placeholder
+# (first run after scaffolding) or a real sha from the previous version
+# (every subsequent release). The sed-only approach silently leaves stale
+# shas in place on re-runs, which produces a formula that brew refuses to
+# install.
 echo
 echo "Patching $FORMULA ..."
-sed -i.bak \
-  -e "s/^  version \".*\"/  version \"$VERSION\"/" \
-  "$FORMULA"
-for target in "${!TARGETS[@]}"; do
-  placeholder="${TARGETS[$target]}"
-  sha="${SHAS[$target]}"
-  sed -i.bak -e "s/$placeholder/$sha/" "$FORMULA"
-done
-rm -f "$FORMULA.bak"
+python3 - "$FORMULA" "$VERSION" "${!TARGETS[@]}" <<'PY' \
+  "${SHAS[@]}"
+import re, sys, os
+formula = sys.argv[1]
+version = sys.argv[2]
+n = (len(sys.argv) - 3) // 2
+targets = sys.argv[3:3+n]
+shas = sys.argv[3+n:]
+mapping = dict(zip(targets, shas))
+src = open(formula).read()
+# Update version line.
+src = re.sub(r'^(\s*version\s+")[^"]*(")', lambda m: m.group(1) + version + m.group(2), src, flags=re.M)
+# For each target, find the URL line that mentions the target, then replace
+# the sha256 line that immediately follows. Tolerates either a real sha or
+# a REPLACE_ME_* placeholder.
+for target, sha in mapping.items():
+    pat = re.compile(
+        r'(url\s+"[^"]*-' + re.escape(target) + r'\.tar\.gz"\s*\n\s*sha256\s+")'
+        r'[^"]*'
+        r'(")',
+        re.M,
+    )
+    src, count = pat.subn(lambda m: m.group(1) + sha + m.group(2), src)
+    if count != 1:
+        print(f"  WARNING: {count} substitutions for {target} (expected 1)", file=sys.stderr)
+open(formula, 'w').write(src)
+PY
+echo "  patched (Python-based)."
 
 echo
 echo "Done. Diff:"

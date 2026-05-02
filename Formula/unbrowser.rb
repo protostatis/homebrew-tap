@@ -1,7 +1,7 @@
 class Unbrowser < Formula
   desc "Web access for LLM agents. One static binary. No Chrome"
   homepage "https://github.com/protostatis/unbrowser"
-  version "0.0.4"
+  version "0.0.5"
   license "Apache-2.0"
 
   # Per-arch native binaries pulled from the GitHub Release. The shas are
@@ -12,18 +12,18 @@ class Unbrowser < Formula
   on_macos do
     on_arm do
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-aarch64-apple-darwin.tar.gz"
-      sha256 "e6b0a1d604381ce5d676ec3c636820265eb63f871b576378cfede3b306ff57cc"
+      sha256 "f85c08fa8f0aa7ac13c99c9fe100956a2246a78ffabae75047fe707b1164edde"
     end
-    # macOS Intel intentionally not packaged here: GitHub's macos-13 runner
-    # pool is being deprecated and CI allocations were exceeding an hour.
-    # Intel Mac users should `cargo install unbrowser`. This block can come
-    # back once we add a cross-compile path from arm64 → x86_64.
+    on_intel do
+      url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-x86_64-apple-darwin.tar.gz"
+      sha256 "b8085aecb157a33e78d406632d05859a1e9280db2ec5eea32eb972543d458b6d"
+    end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "b04b4903125b2566258a2a9f3ad8b761d3b39d69c3b0e008b54501cec99bf52e"
+      sha256 "3a123804d0b230457cce3ec442cc9c71bbe6130ddb6d4e93b5f6199409a5001c"
     end
   end
 
