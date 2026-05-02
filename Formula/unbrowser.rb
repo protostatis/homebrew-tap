@@ -1,7 +1,7 @@
 class Unbrowser < Formula
   desc "Web access for LLM agents. One static binary. No Chrome"
   homepage "https://github.com/protostatis/unbrowser"
-  version "0.0.2"
+  version "0.0.4"
   license "Apache-2.0"
 
   # Per-arch native binaries pulled from the GitHub Release. The shas are
@@ -12,7 +12,7 @@ class Unbrowser < Formula
   on_macos do
     on_arm do
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-aarch64-apple-darwin.tar.gz"
-      sha256 "REPLACE_ME_AARCH64_APPLE_DARWIN"
+      sha256 "e6b0a1d604381ce5d676ec3c636820265eb63f871b576378cfede3b306ff57cc"
     end
     # macOS Intel intentionally not packaged here: GitHub's macos-13 runner
     # pool is being deprecated and CI allocations were exceeding an hour.
@@ -23,7 +23,7 @@ class Unbrowser < Formula
   on_linux do
     on_intel do
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "REPLACE_ME_X86_64_UNKNOWN_LINUX_GNU"
+      sha256 "b04b4903125b2566258a2a9f3ad8b761d3b39d69c3b0e008b54501cec99bf52e"
     end
   end
 
