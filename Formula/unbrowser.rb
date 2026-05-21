@@ -1,7 +1,7 @@
 class Unbrowser < Formula
   desc "Web access for LLM agents. One static binary. No Chrome"
   homepage "https://github.com/protostatis/unbrowser"
-  version "0.0.10"
+  version "0.0.11"
   license "Apache-2.0"
 
   # Per-arch native binaries pulled from the GitHub Release. The shas are
@@ -12,18 +12,18 @@ class Unbrowser < Formula
   on_macos do
     on_arm do
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-aarch64-apple-darwin.tar.gz"
-      sha256 "467da66d477e09a75d8650d147b03d907b0ad7e6b4492a4fd971ef94beda0a26"
+      sha256 "4b8144c1d5ec12022cb81b24550b039e6c4471ada2468dde405826afa5744432"
     end
     on_intel do
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-x86_64-apple-darwin.tar.gz"
-      sha256 "4dbea3d311781f9cc0ac2b9650b15b074eeb994214de84b3c1466e2844534205"
+      sha256 "d6a092edaa1b3881f79769760f306c31d1d820ab69454dc2c54f7040db553e5d"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/protostatis/unbrowser/releases/download/v#{version}/unbrowser-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "9473a0916fa4999832724c0bfcb3b28008d62e6f4d732eb44942fc5eff611d03"
+      sha256 "0f077e1b4efada384dcbb0f4bd34695a61402ec8c66a4d8751c3818f42d3320c"
     end
   end
 
