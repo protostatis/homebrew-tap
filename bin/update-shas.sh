@@ -6,10 +6,9 @@
 #   ./bin/update-shas.sh v0.0.2
 #
 # What it does:
-#   1. Fetches the three platform tarballs from the GitHub Release for the
-#      given tag.
+#   1. Fetches the platform tarballs from the GitHub Release for the given tag.
 #   2. Computes sha256 for each.
-#   3. Updates `version "X.Y.Z"` line in Formula/unbrowser.rb.
+#   3. Updates release tag URLs in Formula/unbrowser.rb.
 #   4. sed-replaces the REPLACE_ME_<TARGET> placeholders with real shas.
 #   5. Prints a diff for human review before commit.
 #
@@ -44,6 +43,7 @@ sha256_of() {
 
 declare -A TARGETS=(
   [aarch64-apple-darwin]=REPLACE_ME_AARCH64_APPLE_DARWIN
+  [aarch64-unknown-linux-gnu]=REPLACE_ME_AARCH64_UNKNOWN_LINUX_GNU
   [x86_64-apple-darwin]=REPLACE_ME_X86_64_APPLE_DARWIN
   [x86_64-unknown-linux-gnu]=REPLACE_ME_X86_64_UNKNOWN_LINUX_GNU
 )
@@ -89,8 +89,9 @@ targets = sys.argv[3:3+n]
 shas = sys.argv[3+n:]
 mapping = dict(zip(targets, shas))
 src = open(formula).read()
-# Update version line.
-src = re.sub(r'^(\s*version\s+")[^"]*(")', lambda m: m.group(1) + version + m.group(2), src, flags=re.M)
+# Homebrew infers the formula version from the URLs, so keep release tags literal.
+src = re.sub(r'^\s*version\s+"[^"]*"\n', '', src, flags=re.M)
+src = re.sub(r'/releases/download/v[^/]+/', f'/releases/download/v{version}/', src)
 # For each target, find the URL line that mentions the target, then replace
 # the sha256 line that immediately follows. Tolerates either a real sha or
 # a REPLACE_ME_* placeholder.
