@@ -10,23 +10,23 @@ class Unbrowser < Formula
   # downloading something that doesn't match.
   on_macos do
     on_arm do
-      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.19/unbrowser-aarch64-apple-darwin.tar.gz"
-      sha256 "56c4a13eeb82267faab55bbba0e69d7decc1ee3cb030357c925b3d58e83aef19"
+      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.20/unbrowser-aarch64-apple-darwin.tar.gz"
+      sha256 "e0d4d11a2c7bb0b75fddeb37820af855e62b68a27eec2705e8cea5d47f1689de"
     end
     on_intel do
-      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.19/unbrowser-x86_64-apple-darwin.tar.gz"
-      sha256 "1c0f82b967c9bb2e1f82d7433589c35917971abbb39d022c4191dc826d6c6177"
+      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.20/unbrowser-x86_64-apple-darwin.tar.gz"
+      sha256 "03469171390c9e7493582450cf63070a337a78527598c954ba93d8785fb7366a"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.19/unbrowser-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "ad1bf96eaf413a10490adb64aa3f81deeac928c54a19e057efe4e6369a977242"
+      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.20/unbrowser-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "0b407c5e6e9d05ae10cd935fea4c385c33c2c86ed5acbed6e2f5407476e35a0f"
     end
     on_arm do
-      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.19/unbrowser-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "f353284434656aacbe957db34fb9de28a50eb7dd02cc8effd64edb4bfcbfc133"
+      url "https://github.com/protostatis/unbrowser/releases/download/v0.0.20/unbrowser-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "6ad5ff426b3b0f10fe4c08e5c3a5ea48f194546bf5455accdc2d64101e0a900c"
     end
   end
 
